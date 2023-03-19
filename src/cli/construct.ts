@@ -30,6 +30,10 @@ const clientConfig = existsSync(`${clientConfigFile}.ts`)
 	? `${clientConfigFile}.js`
 	: undefined
 
+const cacheDir = resolve(cwd, 'node_modules/.vite')
+const serverCacheDir = resolve(cacheDir, 'server')
+const clientCacheDir = resolve(cacheDir, 'client')
+
 let [command] = process.argv.slice(2)
 
 if (!['dev', 'build', 'start'].includes(command)) command = 'dev'
@@ -41,7 +45,7 @@ async function devServer() {
 	const server = await createServer({
 		root: serverFolder,
 		configFile: serverConfig,
-		cacheDir: resolve(cwd, 'node_modules/.vite/server'),
+		cacheDir: serverCacheDir,
 
 		build: {
 			ssr: serverEntry,
@@ -101,7 +105,7 @@ async function devClient() {
 	const server = await createServer({
 		root: clientFolder,
 		configFile: clientConfig,
-		cacheDir: resolve(cwd, 'node_modules/.vite/client'),
+		cacheDir: clientCacheDir,
 	})
 
 	await server.listen()
@@ -113,7 +117,7 @@ async function buildServer() {
 	await build({
 		root: serverFolder,
 		configFile: serverConfig,
-		cacheDir: resolve(cwd, 'node_modules/.vite/server'),
+		cacheDir: serverCacheDir,
 
 		server: {
 			hmr: false,
@@ -138,7 +142,7 @@ async function buildClient() {
 	await build({
 		root: clientFolder,
 		configFile: clientConfig,
-		cacheDir: resolve(cwd, 'node_modules/.vite/client'),
+		cacheDir: clientCacheDir,
 
 		build: {
 			emptyOutDir: true,
