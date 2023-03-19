@@ -1,1 +1,1 @@
-export default 'i love you <3'
+export default 'I love you <3'

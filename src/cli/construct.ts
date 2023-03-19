@@ -2,8 +2,14 @@ import { build, createServer } from 'vite'
 import { ViteNodeServer } from 'vite-node/server'
 import { ViteNodeRunner } from 'vite-node/client'
 import { installSourcemapsSupport } from 'vite-node/source-map'
+import {
+	createHotContext,
+	handleMessage,
+	viteNodeHmrPlugin,
+} from 'vite-node/hmr'
 import { resolve } from 'path'
 import { existsSync } from 'fs'
+import { red } from 'kolorist'
 
 const cwd = process.cwd()
 
@@ -37,10 +43,6 @@ async function devServer() {
 		configFile: serverConfig,
 		cacheDir: resolve(cwd, 'node_modules/.vite/server'),
 
-		server: {
-			hmr: false,
-		},
-
 		build: {
 			ssr: serverEntry,
 			rollupOptions: {
@@ -52,6 +54,8 @@ async function devServer() {
 			// It's recommended to disable deps optimization
 			disabled: true,
 		},
+
+		plugins: [viteNodeHmrPlugin()],
 	})
 	// this is need to initialize the plugins
 	await server.pluginContainer.buildStart({})
@@ -77,9 +81,20 @@ async function devServer() {
 		resolveId(id, importer) {
 			return node.resolveId(id, importer)
 		},
+		createHotContext(runner, url) {
+			return createHotContext(runner, server.emitter, [serverEntry], url)
+		},
 	})
 
-	await runner.executeFile(resolve(serverFolder, 'main.ts'))
+	await runner.executeFile(serverEntry)
+
+	server.emitter?.on('message', payload =>
+		handleMessage(runner, server.emitter, [serverEntry], payload),
+	)
+
+	process.on('uncaughtException', err =>
+		console.error(red('[vite-node] Failed to execute file: \n'), err),
+	)
 }
 
 async function devClient() {

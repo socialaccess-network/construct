@@ -19,6 +19,8 @@ export default defineConfig({
 				'vite-node/client',
 				'vite-node/source-map',
 				'fs/promises',
+				'vite-node/hmr',
+				'kolorist',
 			],
 		},
 	},

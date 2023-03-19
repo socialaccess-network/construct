@@ -1,6 +1,6 @@
 {
 	"name": "@sa-net/construct",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"type": "module",
 	"packageManager": "yarn@3.3.0",
 	"bin": "bin/construct.js",
@@ -21,6 +21,7 @@
 	},
 	"dependencies": {
 		"@michealpearce/utils": "^0.0.9",
+		"kolorist": "^1.7.0",
 		"vite": "^4.2.0",
 		"vite-node": "^0.29.3"
 	},
