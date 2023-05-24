@@ -58,6 +58,7 @@ Outside of that, you are free to do what you want. You can also extend the vite 
 - client (a valid vite project)
 - server
 	- main.ts
+```
 
 ## Build Output
 
@@ -69,4 +70,7 @@ The build command currently outputs the following into the `dist` folder in the 
 To start the server, you can run `node dist/main.cjs`. As for the client code, you can serve it however you want.
 
 For example, you could setup the server code to serve the client files, a static file server, CDN, or web servers like nginx or apache. There are many options, and some require specific setups, which is why construct will not manage this for you.
+
+```
+
 ```
