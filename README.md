@@ -22,14 +22,14 @@ yarn create construct
 
 ### Adding to an Existing Project
 
-To add construct to an existing project, you can install the `@socialaccess-network/construct` package using your preferred package manager.
+To add construct to an existing project, you can install the `@sa-net/construct` package using your preferred package manager.
 
 ```bash
 # npm
-npm install -D @socialaccess-network/construct
+npm install -D @sa-net/construct
 
 # yarn
-yarn add -D @socialaccess-network/construct
+yarn add -D @sa-net/construct
 ```
 
 Then update your `package.json` to include the following scripts:
@@ -51,6 +51,14 @@ Construct expects a few things currently:
 
 Outside of that, you are free to do what you want. You can also extend the vite config by adding a `vite.config` file to the `server` or `client` folder and the config will be merged.
 
+### Expected File Structure
+
+```bash
+- package.json (has construct scripts)
+- client (a valid vite project)
+- server
+	- main.ts
+
 ## Build Output
 
 The build command currently outputs the following into the `dist` folder in the root of your project:
@@ -61,3 +69,4 @@ The build command currently outputs the following into the `dist` folder in the 
 To start the server, you can run `node dist/main.cjs`. As for the client code, you can serve it however you want.
 
 For example, you could setup the server code to serve the client files, a static file server, CDN, or web servers like nginx or apache. There are many options, and some require specific setups, which is why construct will not manage this for you.
+```
